@@ -1,11 +1,15 @@
 import {
+  changeUserRole,
   createAddress,
   deleteAddress,
+  getUserById,
   listAddressess,
+  listUsers,
   updateAddress,
   updateUser,
 } from "@/controllers/userController";
 import errorHandler from "@/handlers/error-handler";
+import adminMiddleware from "@/middlewares/adminMiddleware";
 import authMiddleware from "@/middlewares/authMiddleware";
 import { Router } from "express";
 
@@ -24,5 +28,16 @@ userRoutes.delete(
 );
 
 userRoutes.put("/", [authMiddleware], errorHandler(updateUser));
+userRoutes.put(
+  "/:id/role",
+  [authMiddleware, adminMiddleware],
+  errorHandler(changeUserRole)
+);
+userRoutes.get("/", [authMiddleware, adminMiddleware], errorHandler(listUsers));
+userRoutes.put(
+  "/:id",
+  [authMiddleware, adminMiddleware],
+  errorHandler(getUserById)
+);
 
 export default userRoutes;

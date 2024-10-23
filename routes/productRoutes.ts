@@ -3,6 +3,7 @@ import {
   deleteProduct,
   getProductById,
   listProducts,
+  searchProducts,
   updateProduct,
 } from "@/controllers/productController";
 import errorHandler from "@/handlers/error-handler";
@@ -34,6 +35,12 @@ productRoutes.get(
   "/",
   [authMiddleware, adminMiddleware],
   errorHandler(listProducts)
+);
+
+productRoutes.get(
+  "/search",
+  [authMiddleware, adminMiddleware],
+  errorHandler(searchProducts)
 );
 
 productRoutes.get(
